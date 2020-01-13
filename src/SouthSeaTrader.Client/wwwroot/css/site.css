@@ -105,6 +105,10 @@ app {
     color: red;
 }
 
+.logo-image {
+    width:13em;
+}
+
 @media (max-width: 767.98px) {
     .main .top-row {
         display: none;
