@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SouthSeaTrader.Shared;
 
 namespace SouthSeaTrader.Server.Data
 {
@@ -8,5 +9,8 @@ namespace SouthSeaTrader.Server.Data
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<Trade> Trades { get; set; }
+        public DbSet<TradeGood> TradeGoods { get; set; }
     }
 }

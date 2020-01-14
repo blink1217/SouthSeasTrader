@@ -1,0 +1,41 @@
+﻿@page "/tradegoods"
+@using SouthSeaTrader.Shared
+@inject HttpClient Http
+
+<h1>Trade Goods</h1>
+
+@if (tradeGoods == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Recommendation</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tradein in tradeGoods)
+            {
+                <tr>
+                    <td>@tradein.Name</td>
+                    <td>@tradein.Recommendation.</td>
+                    <td>@tradein.Cost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    TradeGood[] tradeGoods;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tradeGoods = await Http.GetJsonAsync<TradeGood[]>("api/TradeData/TradeGoods");
+    }
+}
