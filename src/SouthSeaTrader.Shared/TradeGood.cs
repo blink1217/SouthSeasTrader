@@ -1,5 +1,5 @@
-﻿using SouthSeaTrader.Shared.Enums;
-using System;
+﻿using Newtonsoft.Json;
+using SouthSeaTrader.Shared.Enums;
 
 namespace SouthSeaTrader.Shared
 {
@@ -10,8 +10,9 @@ namespace SouthSeaTrader.Shared
         public string Recommendation { get; set; }
         public double Cost { get; set; }
         public Symbol Instrument { get; set; }
-
         public int TradeId { get; set; }
-        public Trade Blog { get; set; }
+        [JsonIgnore]
+        public Trade Trade { get; set; }
+        public bool Bought { get; set; }
     }
 }

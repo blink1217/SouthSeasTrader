@@ -10,8 +10,8 @@ using SouthSeaTrader.Server.Data;
 namespace SouthSeaTrader.Server.Data.Migations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200114171256_TradeGoodsAdded")]
-    partial class TradeGoodsAdded
+    [Migration("20200115165050_AddedTradeGoods")]
+    partial class AddedTradeGoods
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -324,7 +324,7 @@ namespace SouthSeaTrader.Server.Data.Migations
 
             modelBuilder.Entity("SouthSeaTrader.Shared.TradeGood", b =>
                 {
-                    b.HasOne("SouthSeaTrader.Shared.Trade", "Blog")
+                    b.HasOne("SouthSeaTrader.Shared.Trade", "Trade")
                         .WithMany("Goods")
                         .HasForeignKey("TradeId")
                         .OnDelete(DeleteBehavior.Cascade)

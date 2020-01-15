@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SouthSeaTrader.Server.Data.Migations
 {
-    public partial class TradeGoodsAdded : Migration
+    public partial class AddedTradeGoods : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

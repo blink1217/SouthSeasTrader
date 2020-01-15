@@ -16,26 +16,41 @@ else
                 <th>Name</th>
                 <th>Recommendation</th>
                 <th>Cost</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var tradein in tradeGoods)
+            @foreach (var tradein in tradeGoods.Goods)
             {
                 <tr>
                     <td>@tradein.Name</td>
                     <td>@tradein.Recommendation.</td>
                     <td>@tradein.Cost</td>
+                    <td><button @onclick="@(() => AddTrade(tradein.TradeGoodId))">Trade</button></td>
                 </tr>
             }
         </tbody>
     </table>
+    <p>@AddedTradeCount</p>
+    <p>The total cost of your ship is @tradeCost doubloons.</p>
+}
+
+@functions {
+    void AddTrade(int i)
+    {
+        tradeCost += tradeGoods.Goods.Where(e => e.TradeGoodId == i).FirstOrDefault().Cost;
+        AddedTradeCount++;
+    }
 }
 
 @code {
-    TradeGood[] tradeGoods;
+    Trade tradeGoods;
+    int AddedTradeCount = 0;
+    double tradeCost = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        tradeGoods = await Http.GetJsonAsync<TradeGood[]>("api/TradeData/TradeGoods");
+        tradeGoods = await Http.GetJsonAsync<Trade>("api/TradeData/TradeGoods");
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace SouthSeaTrader.Shared
@@ -10,5 +11,6 @@ namespace SouthSeaTrader.Shared
         public DateTime TradeDate { get; set; }
         public List<TradeGood> Goods { get; set; }
         public double Profit { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -322,7 +322,7 @@ namespace SouthSeaTrader.Server.Data.Migations
 
             modelBuilder.Entity("SouthSeaTrader.Shared.TradeGood", b =>
                 {
-                    b.HasOne("SouthSeaTrader.Shared.Trade", "Blog")
+                    b.HasOne("SouthSeaTrader.Shared.Trade", "Trade")
                         .WithMany("Goods")
                         .HasForeignKey("TradeId")
                         .OnDelete(DeleteBehavior.Cascade)
