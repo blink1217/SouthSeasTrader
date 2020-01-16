@@ -1,5 +1,7 @@
 ﻿@page "/tradegoods"
 @using SouthSeaTrader.Shared
+@using Newtonsoft.Json
+@using System.Text
 @inject HttpClient Http
 
 <h1>Trade Goods</h1>
@@ -33,20 +35,48 @@ else
     </table>
     <p>@AddedTradeCount</p>
     <p>The total cost of your ship is @tradeCost doubloons.</p>
+    <p><button @onclick="@(() => Buy())">Set Sail</button></p>
+    <p>@message</p>
 }
 
 @functions {
     void AddTrade(int i)
     {
-        tradeCost += tradeGoods.Goods.Where(e => e.TradeGoodId == i).FirstOrDefault().Cost;
+        var tradeG = tradeGoods.Goods.Where(e => e.TradeGoodId == i).FirstOrDefault();
+        tradeCost += tradeG.Cost;
         AddedTradeCount++;
+        goodsBasket.Add(tradeG);
+
+        foreach(var good in goodsBasket)
+        {
+
+            message += string.Concat(good.TradeGoodId, ", ");
+        }
+    }
+
+    async void Buy()
+    {
+        if(!goodsBasket.Any())
+        {
+            message = "There is nothing in your basket!";
+        }
+
+        message = "";
+
+        foreach(var good in goodsBasket)
+        {
+            message += string.Concat(good.TradeGoodId, ", ");
+            await Http.PutAsync($"api/TradeData/AddTradesToShip/{good.TradeGoodId}", null);
+        }
     }
 }
 
 @code {
     Trade tradeGoods;
+    List<TradeGood> goodsBasket = new List<TradeGood>();
     int AddedTradeCount = 0;
     double tradeCost = 0;
+    string message = "";
 
     protected override async Task OnInitializedAsync()
     {

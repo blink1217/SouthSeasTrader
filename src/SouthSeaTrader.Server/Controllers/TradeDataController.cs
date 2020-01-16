@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SouthSeaTrader.Server.Data;
@@ -15,10 +17,12 @@ namespace SouthSeaTrader.Server.Controllers
     {
 
         ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public TradeDataController(ApplicationDbContext db)
+        public TradeDataController(ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
         private static string[] Summaries = new[]
@@ -86,16 +90,18 @@ namespace SouthSeaTrader.Server.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        public Trade AddTradesToShip(int tradeId, List<TradeGood> tradeGoods)
+        [HttpPut("AddTradesToShip/{TradeGoodId}")]
+        public void AddTradesToShip(int TradeGoodId)
         {
+            var tradeG = _db.TradeGoods
+                .Include(e => e.Trade)
+                .Where(e => e.TradeGoodId == TradeGoodId).FirstOrDefault();
 
-            var trade = new Trade { TradeDate = DateTime.Now, Goods = tradeGoods, Profit = 0.0, ShipName = "Winter" };
-            _db.Trades.Add(trade);
+            tradeG.Bought = true;
+            tradeG.Trade.UserId = this.User.Identity.Name;
+            tradeG.Trade.ShipName = "Winter";
+
             _db.SaveChanges();
-
-            return trade;
-
         }
     }
 }

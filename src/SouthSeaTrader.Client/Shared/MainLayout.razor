@@ -1,9 +1,11 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
 <AuthorizeView>
     <Authorized>
         @*<div class="sidebar">
-            <NavMenu />
-        </div>*@
+                <NavMenu />
+            </div>*@
 
         <div class="main">
             <div class="top-row px-4">
@@ -37,3 +39,19 @@
         </div>
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private async Task LogUsername()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("Login");
+        }
+    }
+}

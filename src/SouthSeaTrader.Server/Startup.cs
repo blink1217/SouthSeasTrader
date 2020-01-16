@@ -91,7 +91,7 @@ namespace SouthSeaTrader.Server
             app.UseClientSideBlazorFiles<Client.Startup>();
 
             app.UseHangfireDashboard();
-            backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+            backgroundJobs.Enqueue(() => Console.WriteLine("Application Started Hangfire!"));
 
             app.UseRouting();
 
