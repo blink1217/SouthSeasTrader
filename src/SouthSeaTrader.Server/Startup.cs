@@ -14,6 +14,7 @@ using System.Text;
 using Hangfire;
 using System;
 using Hangfire.SqlServer;
+using Hangfire.Dashboard;
 
 namespace SouthSeaTrader.Server
 {
@@ -89,13 +90,18 @@ namespace SouthSeaTrader.Server
 
             app.UseClientSideBlazorFiles<Client.Startup>();
 
-            app.UseHangfireDashboard();
+            
             backgroundJobs.Enqueue(() => Console.WriteLine("Application Started Hangfire!"));
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                IsReadOnlyFunc = (DashboardContext context) => true
+            });
 
             app.UseEndpoints(endpoints =>
             {
