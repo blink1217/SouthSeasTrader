@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SouthSeaTrader.Server.Data.Migations
+namespace SouthSeaTrader.Server.Data.Migrations
 {
     public partial class BoughtTradeGood : Migration
     {

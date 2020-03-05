@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SouthSeaTrader.Server.Data;
 
-namespace SouthSeaTrader.Server.Data.Migations
+namespace SouthSeaTrader.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200115165050_AddedTradeGoods")]
+    partial class AddedTradeGoods
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,9 +237,6 @@ namespace SouthSeaTrader.Server.Data.Migations
                     b.Property<DateTime>("TradeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("TradeId");
 
                     b.ToTable("Trades");
@@ -249,9 +248,6 @@ namespace SouthSeaTrader.Server.Data.Migations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Bought")
-                        .HasColumnType("bit");
 
                     b.Property<double>("Cost")
                         .HasColumnType("float");
