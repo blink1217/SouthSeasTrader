@@ -74,7 +74,6 @@ namespace SouthSeaTrader.Server
 
             // Add the processing server as IHostedService
             services.AddHangfireServer();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

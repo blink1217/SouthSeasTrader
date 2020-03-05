@@ -86,7 +86,6 @@ namespace SouthSeaTrader.Server.Controllers
             }
 
             return trade;
-
         }
 
         [Authorize]

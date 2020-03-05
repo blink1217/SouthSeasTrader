@@ -47,10 +47,21 @@ else
         AddedTradeCount++;
         goodsBasket.Add(tradeG);
 
-        foreach(var good in goodsBasket)
-        {
+        message = "You have added  ";
 
-            message += string.Concat(good.TradeGoodId, ", ");
+        if(goodsBasket.Count() > 1)
+        {
+            foreach(var good in goodsBasket.SkipLast(1))
+            {
+
+                message += string.Concat(good.Name, ", ");
+            }
+
+            message += string.Concat("and ", goodsBasket.Last().Name, " to the basket.");
+        }
+        else
+        {
+            message += string.Concat(goodsBasket.FirstOrDefault().Name, " to the basket.");
         }
     }
 
@@ -65,7 +76,6 @@ else
 
         foreach(var good in goodsBasket)
         {
-            message += string.Concat(good.TradeGoodId, ", ");
             await Http.PutAsync($"api/TradeData/AddTradesToShip/{good.TradeGoodId}", null);
         }
     }
@@ -82,5 +92,4 @@ else
     {
         tradeGoods = await Http.GetJsonAsync<Trade>("api/TradeData/TradeGoods");
     }
-
 }
